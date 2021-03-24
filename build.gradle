@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+}
+
+group 'de.blu'
+version '1.0.0-SNAPSHOT'
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+jar {
+    duplicatesStrategy = 'EXCLUDE'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
+    implementation 'org.mongodb:mongo-java-driver:3.12.7'
+    implementation 'io.lettuce:lettuce-core:5.2.2.RELEASE'
+}
