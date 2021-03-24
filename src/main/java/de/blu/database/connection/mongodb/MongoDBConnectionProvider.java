@@ -36,23 +36,41 @@ public final class MongoDBConnectionProvider implements MongoDBConnection {
     this.password = password;
   }
 
+  public void init(String host, int port, String databaseName) {
+    this.host = host;
+    this.port = port;
+    this.databaseName = databaseName;
+    this.username = "";
+    this.password = "";
+  }
+
   public void connect() {
-    String uri =
-        "mongodb://"
-            + (username.isEmpty() ? "" : this.username)
-            + (password.isEmpty() ? "" : ":" + this.password)
-            + (username.isEmpty() ? "" : "@")
-            + this.host
-            + ":"
-            + this.port
-            + "/admin";
+    this.connect(true);
+  }
 
-    System.out.println(
-        "Connecting to MongoDB with uri: " + uri.replaceAll(this.password, "password_hidden"));
+  public void connect(boolean printException) {
+    try {
+      String uri =
+          "mongodb://"
+              + (username.isEmpty() ? "" : this.username)
+              + (password.isEmpty() ? "" : ":" + this.password)
+              + (username.isEmpty() ? "" : "@")
+              + this.host
+              + ":"
+              + this.port
+              + "/admin";
 
-    this.client = new MongoClient(new MongoClientURI(uri));
-    this.database = this.client.getDatabase(this.databaseName);
-    this.session = this.client.startSession(ClientSessionOptions.builder().build());
+      System.out.println(
+          "Connecting to MongoDB with uri: " + uri.replaceAll(this.password, "password_hidden"));
+
+      this.client = new MongoClient(new MongoClientURI(uri));
+      this.database = this.client.getDatabase(this.databaseName);
+      this.session = this.client.startSession(ClientSessionOptions.builder().build());
+    } catch (Exception e) {
+      if (printException) {
+        e.printStackTrace();
+      }
+    }
   }
 
   public void disconnect() {
