@@ -35,6 +35,11 @@ public final class RedisConnectionProvider implements RedisConnection {
 
   @Override
   public void connect() {
+    this.connect(true);
+  }
+
+  @Override
+  public void connect(boolean printException) {
     try {
       if (this.getPassword().equalsIgnoreCase("")) {
         this.client =
@@ -64,7 +69,9 @@ public final class RedisConnectionProvider implements RedisConnection {
       this.redisCommandsPubsubListener = this.getConnectionPubsubListener().sync();
       this.redisCommandsPubsubPublish = this.getConnectionPubsubPublish().sync();
     } catch (Exception e) {
-      e.printStackTrace();
+      if (printException) {
+        e.printStackTrace();
+      }
       this.client = null;
       this.connectionCache = null;
       this.redisCommandsCache = null;

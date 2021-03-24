@@ -8,6 +8,9 @@ public interface RedisConnection {
   /** Connect to Redis */
   void connect();
 
+  /** Connect to Redis */
+  void connect(boolean printException);
+
   /** Disconnect from Redis */
   void disconnect();
 
