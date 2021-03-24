@@ -12,6 +12,6 @@ repositories {
 
 ```gradle
 dependencies {
-    compileOnly 'com.github.einfachBlu:database-connection:master-SNAPSHOT'
+    implementation 'com.github.einfachBlu:database-connection:master-SNAPSHOT'
 }
 ```
